@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.android9033.scavenger.scavenger.R;
+import com.parse.Parse;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +17,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // initial Parse
+        Parse.initialize(this, "G5Wr8k19kZZBUxM2LzN68Y7eR9uV6z4TfdpGjZCm",
+                "DUKYRPAh6C0nhRAO0Esp4hj33qI3tWjGWWA9nAGL");
+
+        Button login = (Button) findViewById(R.id.login);
+        Button sign_up = (Button)findViewById(R.id.sign_up);
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSignup();
+            }
+        });
+
+    }
+
+    // This mothod start the activity for create a new user
+    private void startSignup() {
+        Intent mIntent = new Intent(this, signupActivity.class);
+        startActivity(mIntent);
     }
 
     @Override
