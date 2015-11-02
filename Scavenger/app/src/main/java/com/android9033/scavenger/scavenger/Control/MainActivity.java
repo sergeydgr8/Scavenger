@@ -7,22 +7,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
+import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText email;
+    private EditText password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // initial Parse
-        Parse.initialize(this, "G5Wr8k19kZZBUxM2LzN68Y7eR9uV6z4TfdpGjZCm",
-                "DUKYRPAh6C0nhRAO0Esp4hj33qI3tWjGWWA9nAGL");
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
 
         Button login = (Button) findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                valiate();
+                login();
+            }
+        });
+
         Button sign_up = (Button)findViewById(R.id.sign_up);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,7 +48,61 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // This mothod start the activity for create a new user
+    // This method call the Parse
+    private void login() {
+        ParseUser.logInInBackground(email.getText().toString(), password.getText()
+                .toString(), new LogInCallback() {
+
+            @Override
+            public void done(ParseUser user, ParseException e) {
+                //dlg.dismiss();
+                if (e != null) {
+                    // Show the error message
+                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                } else {
+                    // Start an intent for the user's main screen
+                    Intent intent = new Intent(MainActivity.this, MyActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
+
+    // This method check the validation of login data
+    private void valiate() {
+        boolean validationError = false;
+        StringBuilder validationErrorMessage =
+                new StringBuilder();
+        if (isEmpty(email)) {
+            validationError = true;
+            validationErrorMessage.append(getResources().getString(R.string.error_blank_username));
+        }
+        if (isEmpty(password)) {
+            if (validationError) {
+                validationErrorMessage.append(getResources().getString(R.string.error_join));
+            }
+            validationError = true;
+            validationErrorMessage.append(getResources().getString(R.string.error_blank_password));
+        }
+        validationErrorMessage.append(getResources().getString(R.string.error_end));
+
+        // If there is a validation error, display the error
+        if (validationError) {
+            Toast.makeText(MainActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
+                    .show();
+        }
+    }
+
+    // This method check if the EditText is empty
+    private boolean isEmpty(EditText text) {
+        if (text.getText().toString().trim().length() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // This method start the activity for create a new user
     private void startSignup() {
         Intent mIntent = new Intent(this, signupActivity.class);
         startActivity(mIntent);

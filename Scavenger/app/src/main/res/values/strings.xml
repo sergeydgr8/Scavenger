@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Scavenger</string>
     <string name="action_settings">Settings</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_blank_username">Please enter a username</string>
+    <string name="error_blank_password">Please enter a password</string>
+    <string name="error_mismatched_passwords">Please enter the same password twice</string>
+    <string name="error_join">", and "</string>
+    <string name="error_end">.</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="hello_world">Hello_world</string>
 </resources>
