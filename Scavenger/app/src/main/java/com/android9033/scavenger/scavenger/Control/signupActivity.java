@@ -59,7 +59,7 @@ public class signupActivity extends AppCompatActivity {
     private void validate() {
         boolean validationError = false;
         StringBuilder validationErrorMessage =
-                new StringBuilder(getResources().getString(R.string.error_intro));
+                new StringBuilder();
         if (isEmpty(email)) {
             validationError = true;
             validationErrorMessage.append(getResources().getString(R.string.error_blank_username));

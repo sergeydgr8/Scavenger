@@ -31,9 +31,14 @@
             android:name=".Control.MyActivity"
             android:label="@string/title_activity_my"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".Control.CreateQuestActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Control.MainActivity" />
+                android:value=".Control.MyActivity" />
         </activity>
     </application>
 

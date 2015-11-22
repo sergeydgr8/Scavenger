@@ -1,18 +1,25 @@
 package com.android9033.scavenger.scavenger.Control;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.android9033.scavenger.scavenger.R;
 
 public class MyActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +31,45 @@ public class MyActivity extends AppCompatActivity {
         if (toolbar != null){
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Scavenger");
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.addTab(tabLayout.newTab().setText("QUESTS"));
+        tabLayout.addTab(tabLayout.newTab().setText("RANKING"));
+        tabLayout.addTab(tabLayout.newTab().setText("YOU"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewpager = (ViewPager) findViewById(R.id.pager);
+        FragmentPageAdapter ft = new FragmentPageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewpager.setAdapter(ft);
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewpager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mIntent = new Intent(MyActivity.this, CreateQuestActivity.class);
+                startActivity(mIntent);
+
+            }
+        });
 
     }
 
@@ -49,9 +91,9 @@ public class MyActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == android.R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
-        }
+        //if (id == android.R.id.home){
+        //    NavUtils.navigateUpFromSameTask(this);
+       // }
 
         return super.onOptionsItemSelected(item);
     }
