@@ -7,5 +7,53 @@
         layout="@layout/app_bar"/>
 
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etName"
+        android:layout_below="@+id/app_bar"
+        android:layout_alignStart="@+id/editText"
+        android:layout_toStartOf="@+id/btnSearch"
+        android:hint="Name"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_alignBottom="@+id/btnSearch"
+        android:layout_alignStart="@+id/switch1"
+        android:layout_toStartOf="@+id/btnSearch"
+        android:hint="Landmark"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/btnSearch"
+        android:layout_alignEnd="@+id/map"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/etName" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Public"
+        android:id="@+id/switch1"
+        android:checked="false"
+        android:textSize="16dp"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/map"
+        android:layout_marginTop="10dp" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true" />
+
 
 </RelativeLayout>
