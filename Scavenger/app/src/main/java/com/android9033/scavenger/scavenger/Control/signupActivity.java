@@ -94,6 +94,7 @@ public class signupActivity extends AppCompatActivity {
         user.setUsername(email.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {
 
