@@ -28,7 +28,7 @@ public class RankingFragment extends Fragment {
         System.out.println(point);
 
         ParseQuery<Quest> query2=new ParseQuery<Quest>("Quest");
-
+/*
         Quest quest=new Quest();
         quest.setName("second");
         quest.saveInBackground(new SaveCallback() {
@@ -37,7 +37,6 @@ public class RankingFragment extends Fragment {
 
             }
         });
-
 
         ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
         query.findInBackground(new FindCallback<Quest>() {
@@ -51,7 +50,7 @@ public class RankingFragment extends Fragment {
                 //System.out.println(quest.getName());
             }
         });
-
+*/
        // quest.setName("firstquest");
 
         return inflater.inflate(R.layout.fragment_ranking, container, false);

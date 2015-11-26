@@ -10,7 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,6 +39,9 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
 
     private GoogleMap myMap;
     private EditText questName;
+    private EditText questDescription;
+    private ParseGeoPoint geoPoint;
+    private boolean isPublic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,19 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
         }
 
         questName = (EditText) findViewById(R.id.etName);
+        questDescription = (EditText) findViewById(R.id.etDescriptoin);
+
+        Switch mSwitch = (Switch) findViewById(R.id.switch1);
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    isPublic = true;
+                }else{
+                    isPublic = false;
+                }
+            }
+        });
 
         // Set up Google Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -74,7 +93,6 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
         });
 
 
-
     }
 
     // Search the location typed in
@@ -94,22 +112,56 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+
 
         }
 
     }
 
     public void submitQuest(){
-        String name = questName.getText().toString();
-        Quest quest=new Quest();
-        quest.setName(name);
-        quest.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-            }
-        });
+        if (checkValid()){
+            String name = questName.getText().toString();
+            Quest quest=new Quest();
+            quest.setName(name);
+            quest.setGeo(geoPoint);
+            quest.setStage(isPublic);
+            quest.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                }
+            });
+        }
+    }
+
+    public boolean checkValid(){
+        if (isEmpty(questName)){
+            Toast.makeText(CreateQuestActivity.this, "Qest Name is Empty", Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        } else if (isEmpty(questDescription)){
+            Toast.makeText(CreateQuestActivity.this, "Qest Description is Empty", Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        } else if (geoPoint == null){
+            Toast.makeText(CreateQuestActivity.this, "Please set a location", Toast.LENGTH_LONG)
+                    .show();
+            return false;
+        } else {
+            return true;
+        }
 
     }
+
+    public boolean isEmpty(EditText et){
+        if (et.getText().toString().trim().length() > 0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+
 
     @Override
     public void onMapReady(GoogleMap map) {

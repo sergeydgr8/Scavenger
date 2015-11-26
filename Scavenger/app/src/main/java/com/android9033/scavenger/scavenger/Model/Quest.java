@@ -1,6 +1,7 @@
 package com.android9033.scavenger.scavenger.Model;
 
 import com.parse.ParseClassName;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 
 /**
@@ -17,7 +18,10 @@ public class Quest extends ParseObject {
     public boolean getStage(){
         return getBoolean("stage");
     }
-    public void setStage(Boolean stage){
+    public void setStage(boolean stage){
         put("stage",stage);
+    }
+    public void setGeo(ParseGeoPoint geo){
+        put("geopoint",geo);
     }
 }
