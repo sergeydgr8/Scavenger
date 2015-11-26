@@ -1,4 +1,4 @@
-package object;
+package com.android9033.scavenger.scavenger.Model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

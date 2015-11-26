@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import com.android9033.scavenger.scavenger.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
 
-import object.Quest;
+import com.android9033.scavenger.scavenger.Model.Quest;
 
 /**
  * Created by yirongshao on 11/21/15.

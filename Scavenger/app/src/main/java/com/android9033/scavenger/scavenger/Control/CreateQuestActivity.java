@@ -2,7 +2,6 @@ package com.android9033.scavenger.scavenger.Control;
 
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +19,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.wearable.Wearable;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.android9033.scavenger.scavenger.Model.Quest;
 
 /**
  * Created by yirongshao on 11/21/15.
@@ -90,12 +94,20 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
         }
 
     }
 
     public void submitQuest(){
         String name = questName.getText().toString();
+        Quest quest=new Quest();
+        quest.setName(name);
+        quest.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+            }
+        });
 
     }
 

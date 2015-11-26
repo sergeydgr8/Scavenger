@@ -5,7 +5,7 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
-import object.Quest;
+import com.android9033.scavenger.scavenger.Model.Quest;
 
 /**
  * Created by yirongshao on 11/2/15.
