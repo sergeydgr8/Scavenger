@@ -11,4 +11,12 @@
         android:layout_centerHorizontal="true"
         android:text="Ranking" />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textview2" />
+
 </RelativeLayout>

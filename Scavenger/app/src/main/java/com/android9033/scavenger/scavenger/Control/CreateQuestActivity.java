@@ -137,7 +137,7 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
         LatLng sydney = new LatLng(-34, 151);
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
-
+//
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
