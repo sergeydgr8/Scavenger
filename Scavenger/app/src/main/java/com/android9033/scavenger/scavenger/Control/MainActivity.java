@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText email;
+    private EditText username;
     private EditText password;
 
     @Override
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        email = (EditText) findViewById(R.id.email);
+        username = (EditText) findViewById(R.id.uname);
         password = (EditText) findViewById(R.id.password);
 
         Button login = (Button) findViewById(R.id.login);
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     // This method call the Parse
     private void login() {
-        ParseUser.logInInBackground(email.getText().toString(), password.getText()
+        ParseUser.logInInBackground(username.getText().toString(), password.getText()
                 .toString(), new LogInCallback() {
 
             @Override
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         boolean validationError = false;
         StringBuilder validationErrorMessage =
                 new StringBuilder();
-        if (isEmpty(email)) {
+        if (isEmpty(username)) {
             validationError = true;
             validationErrorMessage.append(getResources().getString(R.string.error_blank_username));
         }

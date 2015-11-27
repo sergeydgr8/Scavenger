@@ -22,6 +22,7 @@ import com.parse.SignUpCallback;
  */
 public class signupActivity extends AppCompatActivity {
 
+    private EditText username;
     private EditText email;
     private EditText password;
     private EditText repassword;
@@ -39,7 +40,7 @@ public class signupActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
+        username = (EditText) findViewById(R.id.username);
         email = (EditText) findViewById(R.id.email2);
         password = (EditText) findViewById(R.id.password2);
         repassword = (EditText) findViewById(R.id.repassword);
@@ -60,9 +61,13 @@ public class signupActivity extends AppCompatActivity {
         boolean validationError = false;
         StringBuilder validationErrorMessage =
                 new StringBuilder();
-        if (isEmpty(email)) {
+        if (isEmpty(username)) {
             validationError = true;
             validationErrorMessage.append(getResources().getString(R.string.error_blank_username));
+        }
+        if (isEmpty(email)) {
+            validationError = true;
+            validationErrorMessage.append(getResources().getString(R.string.error_blank_email));
         }
         if (isEmpty(password)) {
             if (validationError) {
@@ -91,9 +96,10 @@ public class signupActivity extends AppCompatActivity {
     // Create a new user in Parse
     private void createUser(){
         ParseUser user = new ParseUser();
-        user.setUsername(email.getText().toString());
+        user.setUsername(username.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
+        user.put("point","0");
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {

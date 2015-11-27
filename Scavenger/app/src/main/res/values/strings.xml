@@ -6,6 +6,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_blank_username">Please enter a username</string>
+    <string name="error_blank_email">Please enter a email</string>
     <string name="error_blank_password">Please enter a password</string>
     <string name="error_mismatched_passwords">Please enter the same password twice</string>
     <string name="error_join">", and "</string>
