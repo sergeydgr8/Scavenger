@@ -92,7 +92,6 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
-
     }
 
     // Search the location typed in
@@ -114,15 +113,14 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
 
-
         }
 
     }
 
     public void submitQuest(){
-        if (checkValid()){
+        if (checkValid()) {
             String name = questName.getText().toString();
-            Quest quest=new Quest();
+            Quest quest = new Quest();
             quest.setName(name);
             quest.setGeo(geoPoint);
             quest.setStage(isPublic);
@@ -132,6 +130,7 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
                 }
             });
         }
+
     }
 
     public boolean checkValid(){
@@ -160,7 +159,6 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             return true;
         }
     }
-
 
 
     @Override
