@@ -92,7 +92,6 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
-
     }
 
     // Search the location typed in
@@ -114,53 +113,23 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
 
-
         }
 
     }
 
     public void submitQuest(){
-        if (checkValid()){
-            String name = questName.getText().toString();
-            Quest quest=new Quest();
-            quest.setName(name);
-            quest.setGeo(geoPoint);
-            quest.setStage(isPublic);
-            quest.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                }
-            });
-        }
-    }
-
-    public boolean checkValid(){
-        if (isEmpty(questName)){
-            Toast.makeText(CreateQuestActivity.this, "Qest Name is Empty", Toast.LENGTH_LONG)
-                    .show();
-            return false;
-        } else if (isEmpty(questDescription)){
-            Toast.makeText(CreateQuestActivity.this, "Qest Description is Empty", Toast.LENGTH_LONG)
-                    .show();
-            return false;
-        } else if (geoPoint == null){
-            Toast.makeText(CreateQuestActivity.this, "Please set a location", Toast.LENGTH_LONG)
-                    .show();
-            return false;
-        } else {
-            return true;
-        }
+        String name = questName.getText().toString();
+        Quest quest=new Quest();
+        quest.setName(name);
+        quest.setGeo(geoPoint);
+        quest.setStage(isPublic);
+        quest.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+            }
+        });
 
     }
-
-    public boolean isEmpty(EditText et){
-        if (et.getText().toString().trim().length() > 0){
-            return false;
-        }else {
-            return true;
-        }
-    }
-
 
 
     @Override
