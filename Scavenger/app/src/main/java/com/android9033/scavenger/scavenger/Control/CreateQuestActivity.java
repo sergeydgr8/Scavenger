@@ -35,7 +35,7 @@ import com.android9033.scavenger.scavenger.Model.Quest;
 /**
  * Created by yirongshao on 11/21/15.
  */
-public class CreateQuestActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class CreateQuestActivity extends AppCompatActivity {
 
     private GoogleMap myMap;
     private EditText questName;
@@ -161,13 +161,6 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        LatLng sydney = new LatLng(-34, 151);
-        map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
-//
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
