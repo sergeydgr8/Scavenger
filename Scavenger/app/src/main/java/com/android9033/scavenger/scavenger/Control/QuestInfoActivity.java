@@ -8,13 +8,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 /**
  * Created by yirongshao on 11/27/15.
  */
 public class QuestInfoActivity extends AppCompatActivity {
-
+    private String description;
+    private ParseGeoPoint geoPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -32,8 +40,29 @@ public class QuestInfoActivity extends AppCompatActivity {
         TextView name = (TextView) findViewById(R.id.name);
 
         String out = getIntent().getStringExtra("1");
-        System.out.print("Out: " + out);
+        //System.out.print("Out: " + out);
         name.setText(out);
+
+        ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
+        query.whereEqualTo("name",out );
+        query.findInBackground(new FindCallback<Quest>() {
+            @Override
+            public void done(List<Quest> objects, ParseException e) {
+                if (e == null) {
+                    for (Quest quest : objects) {
+                        description = quest.getString("description");
+                        geoPoint=quest.getParseGeoPoint("geopoint");
+                        System.out.println(description);
+                        System.out.println(geoPoint);
+                    }
+                }
+                TextView desc = (TextView) findViewById(R.id.description);
+                desc.setText(description +"/n"+ "this is geo point:   "+geoPoint);
+
+            }
+        });
+
+
 
     }
 

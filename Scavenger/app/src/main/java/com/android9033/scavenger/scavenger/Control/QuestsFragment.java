@@ -76,7 +76,7 @@ public class QuestsFragment extends Fragment {
                     if(!quests.isEmpty()) {
                         index++;
                         Quest quest=quests.pop();
-                        str.add(index+".  "+ quest.getString("name")+"__ "+quest.getCreatedAt());
+                        str.add(quest.getString("name"));
                         adapter.notifyDataSetChanged();
                     }
                 }
