@@ -124,6 +124,7 @@ public class CreateQuestActivity extends AppCompatActivity implements OnMapReady
             quest.setName(name);
             quest.setGeo(geoPoint);
             quest.setStage(isPublic);
+            quest.setDes(questDescription.getText().toString());
             quest.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {

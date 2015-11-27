@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 /**
  * Created by yirongshao on 11/21/15.
@@ -29,7 +31,7 @@ public class QuestsFragment extends Fragment {
     private  ListView lv;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> str;
-    PriorityQueue<ParseUser> points=new PriorityQueue<ParseUser>(10,new Comparator<ParseUser>(){
+   /* PriorityQueue<ParseUser> points=new PriorityQueue<ParseUser>(10,new Comparator<ParseUser>(){
         @Override
         public int compare(ParseUser user1,ParseUser user2){
             int first=Integer.parseInt(user1.getString("point"));
@@ -37,6 +39,8 @@ public class QuestsFragment extends Fragment {
             return second-first;
         }
     });
+    */
+    Stack<Quest> quests=new Stack<Quest>();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -52,14 +56,13 @@ public class QuestsFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1, str);
         lv.setAdapter(adapter);
 
-        ParseQuery<ParseUser> query=ParseUser.getQuery();
-
-        query.findInBackground(new FindCallback<ParseUser>() {
+        ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
+        query.findInBackground(new FindCallback<Quest>() {
             @Override
-            public void done(List<ParseUser> objects, ParseException e) {
+            public void done(List<Quest> objects, ParseException e) {
                 if(e==null) {
-                    for (ParseUser user : objects) {
-                        points.offer(user);
+                    for (Quest quest : objects) {
+                        quests.push(quest);
                         //System.out.println(user.getString("point"));
                     }
                 }
@@ -69,10 +72,10 @@ public class QuestsFragment extends Fragment {
                 //ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_ranking, container, false);
                 int index =0;
                 for (int tt = 0; tt < 10; tt++){
-                    if(!points.isEmpty()) {
+                    if(!quests.isEmpty()) {
                         index++;
-                        ParseUser user=points.poll();
-                        str.add(index+".  "+ user.getString("point")+": "+user.getString("username"));
+                        Quest quest=quests.pop();
+                        str.add(index+".  "+ quest.getString("name")+"__ "+quest.getCreatedAt());
                         adapter.notifyDataSetChanged();
                     }
                 }

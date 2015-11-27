@@ -24,4 +24,5 @@ public class Quest extends ParseObject {
     public void setGeo(ParseGeoPoint geo){
         put("geopoint",geo);
     }
+    public void setDes(String des){put("description",des);}
 }
