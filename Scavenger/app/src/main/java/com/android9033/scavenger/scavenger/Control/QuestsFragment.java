@@ -1,5 +1,6 @@
 package com.android9033.scavenger.scavenger.Control;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -90,7 +91,9 @@ public class QuestsFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent mIntent = new Intent(getActivity(), QuestInfoActivity.class);
+                mIntent.putExtra("1",adapter.getItem(position));
+                startActivity(mIntent);
             }
         });
 

@@ -46,6 +46,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Control.MyActivity" />
         </activity>
+        <activity
+            android:name=".Control.QuestInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Control.MyActivity" />
+        </activity>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
