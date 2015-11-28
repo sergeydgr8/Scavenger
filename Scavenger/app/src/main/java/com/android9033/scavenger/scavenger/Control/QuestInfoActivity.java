@@ -1,12 +1,16 @@
 package com.android9033.scavenger.scavenger.Control;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
@@ -31,6 +35,7 @@ public class QuestInfoActivity extends AppCompatActivity {
     private GoogleMap myMap;
     private String description;
     private ParseGeoPoint geoPoint;
+    private Button found;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -52,6 +57,7 @@ public class QuestInfoActivity extends AppCompatActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 myMap = googleMap;
+                myMap.setMyLocationEnabled(true);
                 myMap.getUiSettings().setZoomControlsEnabled(true);
             }
         });
@@ -81,12 +87,29 @@ public class QuestInfoActivity extends AppCompatActivity {
 
                 LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
                 myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-                myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f));
 
             }
         });
 
+        found = (Button) findViewById(R.id.btnFoundit);
 
+    }
+
+    public void onClickFound(View view){
+        Location myLocation = myMap.getMyLocation();
+        double latDiff = Math.pow((geoPoint.getLatitude() - myLocation.getLatitude()), 2);
+        double lngDiff = Math.pow((geoPoint.getLongitude() - myLocation.getLongitude()),2);
+        double r = Math.sqrt(latDiff +lngDiff);
+
+        if (r < 0.001){
+            Toast.makeText(QuestInfoActivity.this, "Success! And you got 2 points!", Toast.LENGTH_SHORT)
+                    .show();
+
+        } else{
+            Toast.makeText(QuestInfoActivity.this, "Oops, Find It Again! ", Toast.LENGTH_LONG)
+                    .show();
+        }
 
     }
 
