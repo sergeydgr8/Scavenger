@@ -63,7 +63,11 @@ public class QuestsFragment extends Fragment {
             public void done(List<Quest> objects, ParseException e) {
                 if(e==null) {
                     for (Quest quest : objects) {
-                        quests.push(quest);
+                        List userlist=quest.getList("userfinished");
+                        String curUser=ParseUser.getCurrentUser().getUsername();
+                        if(!userlist.contains(curUser)) {
+                            quests.push(quest);
+                        }
                         //System.out.println(user.getString("point"));
                     }
                 }

@@ -24,6 +24,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class QuestInfoActivity extends AppCompatActivity {
     private String description;
     private ParseGeoPoint geoPoint;
     private Button found;
+    private String out;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -65,7 +68,7 @@ public class QuestInfoActivity extends AppCompatActivity {
 
         TextView name = (TextView) findViewById(R.id.name);
 
-        String out = getIntent().getStringExtra("1");
+        out = getIntent().getStringExtra("1");
         //System.out.print("Out: " + out);
         name.setText(out);
 
@@ -105,10 +108,48 @@ public class QuestInfoActivity extends AppCompatActivity {
         if (r < 0.001){
             Toast.makeText(QuestInfoActivity.this, "Success! And you got 2 points!", Toast.LENGTH_SHORT)
                     .show();
+            ParseUser curUser=ParseUser.getCurrentUser();
+            int oldPoint=Integer.parseInt(curUser.getString("point"));
+            System.out.println(oldPoint);
+            curUser.put("point", Integer.toString(oldPoint + 2));
+
+            curUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                }
+            });
+
+
+            ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
+            query.whereEqualTo("name", out);
+            query.findInBackground(new FindCallback<Quest>() {
+                @Override
+                public void done(List<Quest> objects, ParseException e) {
+                    if (e == null) {
+                        for (Quest quest : objects) {
+                            //System.out.println(quest.getList("userfinished"));
+                            List userlist=quest.getList("userfinished");
+                            userlist.add(ParseUser.getCurrentUser().getUsername());
+                            quest.put("userfinished", userlist);
+                            quest.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+
+                                }
+                            });
+                        }
+                    }
+
+
+                }
+            });
+
 
         } else{
             Toast.makeText(QuestInfoActivity.this, "Oops, Find It Again! ", Toast.LENGTH_LONG)
                     .show();
+
         }
 
     }

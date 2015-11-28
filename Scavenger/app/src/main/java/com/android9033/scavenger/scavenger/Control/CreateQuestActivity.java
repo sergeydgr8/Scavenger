@@ -28,6 +28,7 @@ import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.android9033.scavenger.scavenger.Model.Quest;
@@ -122,6 +123,7 @@ public class CreateQuestActivity extends AppCompatActivity {
             String name = questName.getText().toString();
             Quest quest = new Quest();
             quest.setName(name);
+            quest.put("userfinished",new ArrayList<String>());
             quest.setGeo(geoPoint);
             quest.setStage(isPublic);
             quest.setDes(questDescription.getText().toString());
