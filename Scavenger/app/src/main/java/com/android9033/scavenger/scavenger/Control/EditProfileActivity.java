@@ -69,6 +69,18 @@ public class EditProfileActivity extends AppCompatActivity {
         String name = "Zhe";
         editName.setText(name);
 
+        Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitChange();
+            }
+        });
+
+
+    }
+
+    private void submitChange() {
 
 
     }
@@ -81,12 +93,12 @@ public class EditProfileActivity extends AppCompatActivity {
         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which == 0){
+                if (which == 0) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, PICK_FROM_CAMERA);
 
                     dialog.cancel();
-                }else {
+                } else {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     File pictireDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                     String picPath = pictireDirectory.getPath();
