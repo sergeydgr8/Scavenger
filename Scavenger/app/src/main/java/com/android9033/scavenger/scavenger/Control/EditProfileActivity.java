@@ -2,6 +2,9 @@ package com.android9033.scavenger.scavenger.Control;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,11 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * Created by yirongshao on 11/29/15.
@@ -28,7 +35,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private Uri imageCaptureUri;
     private ImageView mImageView;
-    Button editImage;
+    private  Button editImage;
+
+    private EditText editName;
+    private EditText editEmail;
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_FILE = 2;
@@ -47,7 +57,24 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        final String[] items = new String[] {"Take a picture", "Choose from SD card"};
+        mImageView = (ImageView) findViewById(R.id.img);
+        editImage = (Button) findViewById(R.id.btnEdit);
+
+        // Users can change their profile photo
+        changePhoto();
+
+        editName = (EditText) findViewById(R.id.editname);
+        editEmail = (EditText) findViewById(R.id.editemail);
+
+        String name = "Zhe";
+        editName.setText(name);
+
+
+
+    }
+
+    private void changePhoto() {
+        final String[] items = new String[] {"Take a picture", "Choose from Gallery"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, items);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Image");
@@ -56,29 +83,22 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0){
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File file = new File(Environment.getExternalStorageDirectory(), "tmp" + String.valueOf(System.currentTimeMillis())+".jpg");
-                    imageCaptureUri = Uri.fromFile(file);
-                    try {
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageCaptureUri);
-                        intent.putExtra("return data", true);
-                        startActivityForResult(intent, PICK_FROM_CAMERA);
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
+                    startActivityForResult(intent, PICK_FROM_CAMERA);
+
                     dialog.cancel();
                 }else {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent.createChooser(intent, "Complete action using"), PICK_FROM_FILE);
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    File pictireDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                    String picPath = pictireDirectory.getPath();
+                    Uri data = Uri.parse(picPath);
+                    intent.setDataAndType(data, "image/*");
+                    startActivityForResult(intent, PICK_FROM_FILE);
                 }
             }
         });
 
         final AlertDialog dialog = builder.create();
 
-        mImageView = (ImageView) findViewById(R.id.img);
-        editImage = (Button) findViewById(R.id.btnEdit);
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +106,35 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        String path = "";
+        if (requestCode == PICK_FROM_FILE){
+            imageCaptureUri = data.getData();
+            InputStream inputStream;
+            try{
+                inputStream = getContentResolver().openInputStream(imageCaptureUri);
+                Bitmap image = BitmapFactory.decodeStream(inputStream);
+                mImageView.setImageBitmap(image);
+
+            } catch (FileNotFoundException e){
+                e.printStackTrace();
+                Toast.makeText(this, "Unable to open image", Toast.LENGTH_SHORT).show();
+            }
+
+        }else {
+            //path = imageCaptureUri.getPath();
+            //Bitmap bitmap = BitmapFactory.decodeFile(path);
+            Bitmap cameraImg = (Bitmap) data.getExtras().get("data");
+            mImageView.setImageBitmap(cameraImg);
+        }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
