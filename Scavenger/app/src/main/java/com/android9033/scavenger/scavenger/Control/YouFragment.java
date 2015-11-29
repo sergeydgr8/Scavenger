@@ -55,15 +55,6 @@ public class YouFragment extends Fragment {
         });
 
 
-        Button edit = (Button) view.findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mIntent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(mIntent);
-            }
-        });
-
         str1 = new ArrayList<String>();
         lv1 = (ListView) view.findViewById(R.id.completedList);
         adapter1 = new ArrayAdapter<String>(getActivity(),R.layout.text, str1);
