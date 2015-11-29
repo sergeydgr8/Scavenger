@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.IOException;
@@ -123,7 +124,7 @@ public class CreateQuestActivity extends AppCompatActivity {
             String name = questName.getText().toString();
             Quest quest = new Quest();
             quest.setName(name);
-            quest.put("userfinished",new ArrayList<String>());
+            quest.put("userfinished", new ArrayList<String>());
             quest.setGeo(geoPoint);
             quest.setStage(isPublic);
             quest.setDes(questDescription.getText().toString());
@@ -132,6 +133,17 @@ public class CreateQuestActivity extends AppCompatActivity {
                 public void done(ParseException e) {
                 }
             });
+            ParseUser curUser=ParseUser.getCurrentUser();
+            List<String> createlist=curUser.getList("create");
+            createlist.add(name);
+            curUser.put("create", createlist);
+            curUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                }
+            });
+
         }
 
     }
