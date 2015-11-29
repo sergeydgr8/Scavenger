@@ -76,6 +76,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         final AlertDialog dialog = builder.create();
+
         mImageView = (ImageView) findViewById(R.id.img);
         editImage = (Button) findViewById(R.id.btnEdit);
         editImage.setOnClickListener(new View.OnClickListener() {
