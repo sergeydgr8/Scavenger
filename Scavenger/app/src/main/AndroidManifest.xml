@@ -53,6 +53,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Control.MyActivity" />
         </activity>
+        <activity
+            android:name=".Control.EditProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Control.MyActivity" />
+        </activity>
 
 
         <meta-data
