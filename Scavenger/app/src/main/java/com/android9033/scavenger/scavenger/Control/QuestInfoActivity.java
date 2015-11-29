@@ -27,6 +27,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -112,7 +113,9 @@ public class QuestInfoActivity extends AppCompatActivity {
             int oldPoint=Integer.parseInt(curUser.getString("point"));
             System.out.println(oldPoint);
             curUser.put("point", Integer.toString(oldPoint + 2));
-
+            List<String> completelist=curUser.getList("complete");
+            completelist.add(out);
+            curUser.put("complete",completelist);
             curUser.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
@@ -129,7 +132,7 @@ public class QuestInfoActivity extends AppCompatActivity {
                     if (e == null) {
                         for (Quest quest : objects) {
                             //System.out.println(quest.getList("userfinished"));
-                            List userlist=quest.getList("userfinished");
+                            List userlist = quest.getList("userfinished");
                             userlist.add(ParseUser.getCurrentUser().getUsername());
                             quest.put("userfinished", userlist);
                             quest.saveInBackground(new SaveCallback() {
@@ -144,6 +147,12 @@ public class QuestInfoActivity extends AppCompatActivity {
 
                 }
             });
+
+
+            //ParseUser curUser2=ParseUser.getCurrentUser();
+
+
+
 
 
         } else{

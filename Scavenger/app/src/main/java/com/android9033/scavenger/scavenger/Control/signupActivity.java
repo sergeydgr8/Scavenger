@@ -17,6 +17,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.util.ArrayList;
+
 /**
  * Created by yirongshao on 10/31/15.
  */
@@ -99,7 +101,9 @@ public class signupActivity extends AppCompatActivity {
         user.setUsername(username.getText().toString());
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
-        user.put("point","0");
+        user.put("point", "0");
+        user.put("complete",new ArrayList<String>());
+        user.put("create",new ArrayList<String>());
 
         // Call the Parse signup method
         user.signUpInBackground(new SignUpCallback() {

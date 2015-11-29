@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by yirongshao on 11/21/15.
@@ -25,6 +27,7 @@ public class YouFragment extends Fragment {
     private ListView lv2;
     private ArrayAdapter<String> adapter2;
     private ArrayList<String> str2;
+    private ParseUser curUser=ParseUser.getCurrentUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -32,20 +35,21 @@ public class YouFragment extends Fragment {
 
 
         TextView name = (TextView) view.findViewById(R.id.profileName);
-        String a = "name ";
+        String a = curUser.getUsername();
         name.setText(a);
 
         TextView points = (TextView) view.findViewById(R.id.points);
-        String b = "? points";
-        points.setText(b);
+        String b = curUser.getString("point");
+        points.setText("point:"+b);
 
         str1 = new ArrayList<String>();
         lv1 = (ListView) view.findViewById(R.id.completedList);
         adapter1 = new ArrayAdapter<String>(getActivity(),R.layout.text, str1);
         lv1.setAdapter(adapter1);
-        for (int tt = 0; tt < 10; tt++){
+        List<String> completeList=curUser.getList("complete");
+        for (int i = 0; i< completeList.size(); i++){
 
-            str1.add("completed quests " + tt);
+            str1.add(completeList.get(i));
             adapter1.notifyDataSetChanged();
 
         }
@@ -54,9 +58,10 @@ public class YouFragment extends Fragment {
         lv2 = (ListView) view.findViewById(R.id.createdList);
         adapter2 = new ArrayAdapter<String>(getActivity(),R.layout.text, str2);
         lv2.setAdapter(adapter2);
-        for (int tt = 0; tt < 10; tt++){
+        List<String> createList=curUser.getList("create");
+        for (int i = 0; i< createList.size(); i++){
 
-            str2.add("created quests " + tt);
+            str2.add(createList.get(i));
             adapter2.notifyDataSetChanged();
 
         }
