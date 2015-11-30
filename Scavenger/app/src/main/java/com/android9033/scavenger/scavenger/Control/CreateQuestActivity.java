@@ -1,5 +1,6 @@
 package com.android9033.scavenger.scavenger.Control;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -143,7 +144,8 @@ public class CreateQuestActivity extends AppCompatActivity {
 
                 }
             });
-
+            Toast.makeText(CreateQuestActivity.this, "Created", Toast.LENGTH_LONG)
+                    .show();
         }
 
     }

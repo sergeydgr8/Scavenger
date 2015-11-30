@@ -71,7 +71,6 @@ public class EditProfileActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editname);
         editEmail = (EditText) findViewById(R.id.editemail);
 
-
         String name = curUser.getUsername();
         editName.setText(name);
         editEmail.setText(curUser.getEmail());
@@ -81,15 +80,14 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitChange();
+                Intent mIntent = new Intent(EditProfileActivity.this, MyActivity.class);
+                startActivity(mIntent);
             }
         });
-
 
     }
 
     private void submitChange() {
-
-
         curUser.put("username",editName.getText().toString());
         curUser.put("email",editEmail.getText().toString());
         curUser.saveInBackground(new SaveCallback() {
@@ -98,7 +96,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
             }
         });
-
+        Toast.makeText(EditProfileActivity.this, "Success", Toast.LENGTH_LONG)
+                .show();
 
     }
 
@@ -134,7 +133,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-
     }
 
     @Override
