@@ -23,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,6 +43,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private EditText editName;
     private EditText editEmail;
+    private ParseUser curUser=ParseUser.getCurrentUser();
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_FILE = 2;
@@ -66,8 +71,10 @@ public class EditProfileActivity extends AppCompatActivity {
         editName = (EditText) findViewById(R.id.editname);
         editEmail = (EditText) findViewById(R.id.editemail);
 
-        String name = "Zhe";
+
+        String name = curUser.getUsername();
         editName.setText(name);
+        editEmail.setText(curUser.getEmail());
 
         Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +88,16 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void submitChange() {
+
+
+        curUser.put("username",editName.getText().toString());
+        curUser.put("email",editEmail.getText().toString());
+        curUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
 
 
     }
