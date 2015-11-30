@@ -1,6 +1,7 @@
 package com.android9033.scavenger.scavenger.Control;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,8 @@ import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
                 startSignup();
             }
         });
+
+        final TextInputLayout username_wrapper = (TextInputLayout) findViewById(R.id.username_login_wrapper);
+        final TextInputLayout password_wrapper = (TextInputLayout) findViewById(R.id.password_login_wrapper);
+
+        username_wrapper.setHint("Username");
+        password_wrapper.setHint("Password");
 
     }
 
