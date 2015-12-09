@@ -23,14 +23,21 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by yirongshao on 11/29/15.
@@ -40,10 +47,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri imageCaptureUri;
     private ImageView mImageView;
     private  Button editImage;
+    private Bitmap cameraImg;
 
     private EditText editName;
     private EditText editEmail;
-    private ParseUser curUser=ParseUser.getCurrentUser();
+    private ParseUser curUser = ParseUser.getCurrentUser();
 
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_FILE = 2;
@@ -62,18 +70,33 @@ public class EditProfileActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+
+
         mImageView = (ImageView) findViewById(R.id.img);
         editImage = (Button) findViewById(R.id.btnEdit);
 
+
+        ParseFile profile=curUser.getParseFile("image");
+        profile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] data, ParseException e) {
+                if(e==null){
+                    Bitmap profile=BitmapFactory.decodeByteArray(data,0,data.length);
+                    mImageView.setImageBitmap(profile);
+                }
+            }
+        });
         // Users can change their profile photo
         changePhoto();
 
         editName = (EditText) findViewById(R.id.editname);
         editEmail = (EditText) findViewById(R.id.editemail);
 
+
         String name = curUser.getUsername();
         editName.setText(name);
         editEmail.setText(curUser.getEmail());
+
 
         Button btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +108,17 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void submitChange() {
+
+        ByteArrayOutputStream stream=new ByteArrayOutputStream();
+        cameraImg.compress(Bitmap.CompressFormat.JPEG,100,stream);
+        byte[] data2=stream.toByteArray();
+        ParseFile photofile=new ParseFile("profile",data2);
+        curUser.put("image", photofile);
+
         curUser.put("username",editName.getText().toString());
         curUser.put("email",editEmail.getText().toString());
         curUser.saveInBackground(new SaveCallback() {
@@ -111,6 +142,27 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    /*Calendar cal = Calendar.getInstance();
+                    File photofile = new File(Environment.getExternalStorageDirectory(), (cal.getTimeInMillis() + ".jpg"));
+                    if (!photofile.exists()) {
+                        try {
+                            photofile.createNewFile();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        photofile.delete();
+                        try {
+                            photofile.createNewFile();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    System.out.println(photofile.getName());
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photofile));
+                    */
+
                     startActivityForResult(intent, PICK_FROM_CAMERA);
 
                     dialog.cancel();
@@ -133,6 +185,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
     }
 
     @Override
@@ -145,8 +198,9 @@ public class EditProfileActivity extends AppCompatActivity {
             InputStream inputStream;
             try{
                 inputStream = getContentResolver().openInputStream(imageCaptureUri);
-                Bitmap image = BitmapFactory.decodeStream(inputStream);
-                mImageView.setImageBitmap(image);
+                cameraImg = BitmapFactory.decodeStream(inputStream);
+
+                mImageView.setImageBitmap(cameraImg);
 
             } catch (FileNotFoundException e){
                 e.printStackTrace();
@@ -156,13 +210,18 @@ public class EditProfileActivity extends AppCompatActivity {
         }else {
             //path = imageCaptureUri.getPath();
             //Bitmap bitmap = BitmapFactory.decodeFile(path);
-            Bitmap cameraImg = (Bitmap) data.getExtras().get("data");
+            cameraImg = (Bitmap) data.getExtras().get("data");
+
+           // Calendar cal = Calendar.getInstance();
+            //File photofile = new File(Environment.getExternalStorageDirectory(), (cal.getTimeInMillis() + ".jpg"));
+
+            //System.out.println(photofile.getName());
+
             mImageView.setImageBitmap(cameraImg);
         }
 
     }
-
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

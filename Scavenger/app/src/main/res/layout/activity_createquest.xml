@@ -38,6 +38,17 @@
         android:layout_toStartOf="@+id/btnSearch"
         android:textSize="12sp" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etPoint"
+        android:hint="Points"
+        android:layout_below="@+id/etLandmark"
+        android:layout_alignStart="@+id/switch1"
+        android:layout_alignEnd="@+id/etLandmark"
+        android:inputType="number"
+        android:textSize="12sp"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,14 +66,14 @@
         android:id="@+id/switch1"
         android:checked="false"
         android:textSize="12sp"
-        android:layout_below="@+id/btnSearch"
+        android:layout_below="@+id/etPoint"
         android:layout_alignStart="@+id/map" />
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
         android:layout_width="fill_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_below="@+id/switch1"

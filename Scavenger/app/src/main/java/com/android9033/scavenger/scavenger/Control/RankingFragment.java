@@ -96,7 +96,7 @@ public class RankingFragment extends Fragment {
                     if(!points.isEmpty()) {
                         index++;
                         ParseUser user=points.poll();
-                        str.add(index+".  "+ user.getString("point")+": "+user.getString("username"));
+                        str.add(index+".  "+ user.getString("username") + ": " +user.getString("point") + " points");
                         adapter.notifyDataSetChanged();
                     }
                 }

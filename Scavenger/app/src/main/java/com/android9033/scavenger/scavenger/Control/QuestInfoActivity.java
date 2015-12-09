@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -36,10 +37,12 @@ import java.util.List;
 public class QuestInfoActivity extends AppCompatActivity {
 
     private GoogleMap myMap;
+    GoogleApiClient mGoogleApiClient;
     private String description;
     private ParseGeoPoint geoPoint;
     private Button found;
     private String out;
+    private String questpoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -88,6 +91,7 @@ public class QuestInfoActivity extends AppCompatActivity {
                 }
                 TextView desc = (TextView) findViewById(R.id.description);
                 desc.setText(description);
+                System.out.print(geoPoint.getLatitude() + ", " + geoPoint.getLongitude());
 
                 LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
                 myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
@@ -106,22 +110,41 @@ public class QuestInfoActivity extends AppCompatActivity {
         double lngDiff = Math.pow((geoPoint.getLongitude() - myLocation.getLongitude()),2);
         double r = Math.sqrt(latDiff +lngDiff);
 
-        if (r < 0.001){
-            Toast.makeText(QuestInfoActivity.this, "Success! And you got 2 points!", Toast.LENGTH_SHORT)
-                    .show();
-            ParseUser curUser=ParseUser.getCurrentUser();
-            int oldPoint=Integer.parseInt(curUser.getString("point"));
-            System.out.println(oldPoint);
-            curUser.put("point", Integer.toString(oldPoint + 2));
-            List<String> completelist=curUser.getList("complete");
-            completelist.add(out);
-            curUser.put("complete",completelist);
-            curUser.saveInBackground(new SaveCallback() {
+        if (r < 0.0005){
+            ParseQuery<Quest> Qquery=new ParseQuery<Quest>("Quest");
+            Qquery.whereEqualTo("name", out);
+            Qquery.findInBackground(new FindCallback<Quest>() {
                 @Override
-                public void done(ParseException e) {
+                public void done(List<Quest> objects, ParseException e) {
+                    if (e == null) {
+                        for (Quest quest : objects) {
+                            questpoint = quest.getString("questpoint");
+
+                        }
+                    }
+
+                    Toast.makeText(QuestInfoActivity.this, "Success! And you got " + questpoint + " points!", Toast.LENGTH_SHORT).show();
+                    ParseUser curUser = ParseUser.getCurrentUser();
+                    int oldPoint = Integer.parseInt(curUser.getString("point"));
+                    System.out.println(oldPoint);
+                    curUser.put("point", Integer.toString(oldPoint + Integer.parseInt(questpoint)));
+                    List<String> completelist = curUser.getList("complete");
+                    completelist.add(out);
+                    curUser.put("complete", completelist);
+                    curUser.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                        }
+                    });
 
                 }
             });
+
+
+
+
+
 
 
             ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
@@ -150,9 +173,6 @@ public class QuestInfoActivity extends AppCompatActivity {
 
 
             //ParseUser curUser2=ParseUser.getCurrentUser();
-
-
-
 
 
         } else{
@@ -187,4 +207,5 @@ public class QuestInfoActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

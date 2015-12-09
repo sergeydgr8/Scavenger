@@ -1,6 +1,8 @@
 package com.android9033.scavenger.scavenger.Control;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,11 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -30,6 +36,7 @@ public class YouFragment extends Fragment {
     private ArrayAdapter<String> adapter2;
     private ArrayList<String> str2;
     private ParseUser curUser=ParseUser.getCurrentUser();
+    private ImageView mImageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -43,7 +50,7 @@ public class YouFragment extends Fragment {
 
         TextView points = (TextView) view.findViewById(R.id.points);
         String b = curUser.getString("point");
-        points.setText("points: "+b);
+        points.setText("points: " + b);
 
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +61,18 @@ public class YouFragment extends Fragment {
             }
         });
 
+
+        mImageView = (ImageView) view.findViewById(R.id.image);
+        ParseFile profile=curUser.getParseFile("image");
+        profile.getDataInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] data, ParseException e) {
+                if(e==null){
+                    Bitmap profile= BitmapFactory.decodeByteArray(data, 0, data.length);
+                    mImageView.setImageBitmap(profile);
+                }
+            }
+        });
 
         str1 = new ArrayList<String>();
         lv1 = (ListView) view.findViewById(R.id.completedList);

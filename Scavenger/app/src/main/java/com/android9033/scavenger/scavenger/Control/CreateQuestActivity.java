@@ -1,6 +1,5 @@
 package com.android9033.scavenger.scavenger.Control;
 
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -43,6 +42,7 @@ public class CreateQuestActivity extends AppCompatActivity {
     private GoogleMap myMap;
     private EditText questName;
     private EditText questDescription;
+    private EditText questPoint;
     private ParseGeoPoint geoPoint;
     private boolean isPublic;
 
@@ -62,6 +62,8 @@ public class CreateQuestActivity extends AppCompatActivity {
 
         questName = (EditText) findViewById(R.id.etName);
         questDescription = (EditText) findViewById(R.id.etDescriptoin);
+        questPoint = (EditText) findViewById(R.id.etPoint);
+
 
         Switch mSwitch = (Switch) findViewById(R.id.switch1);
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -113,7 +115,7 @@ public class CreateQuestActivity extends AppCompatActivity {
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
             myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-            myMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
             geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
 
         }
@@ -129,6 +131,7 @@ public class CreateQuestActivity extends AppCompatActivity {
             quest.setGeo(geoPoint);
             quest.setStage(isPublic);
             quest.setDes(questDescription.getText().toString());
+            quest.put("questpoint",questPoint.getText().toString());
             quest.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
