@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by yirongshao on 10/31/15.
  */
-public class signupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText email;
@@ -90,7 +90,7 @@ public class signupActivity extends AppCompatActivity {
 
         // If there is a validation error, display the error
         if (validationError) {
-            Toast.makeText(signupActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
+            Toast.makeText(SignupActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
                     .show();
         }
     }
@@ -113,10 +113,10 @@ public class signupActivity extends AppCompatActivity {
                 //    dlg.dismiss();
                 if (e != null) {
                     // Show the error message
-                    Toast.makeText(signupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
                     // Start an intent for the user's main screen
-                    Intent intent = new Intent(signupActivity.this, MyActivity.class);
+                    Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }

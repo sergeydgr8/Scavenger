@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android9033.scavenger.scavenger.Model.Quest;
 import com.android9033.scavenger.scavenger.R;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;

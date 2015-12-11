@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:tabWidgetStyle">@style/LightTabWidget</item>
+
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -13,5 +15,12 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="LightTabWidget" parent="@android:style/Widget.TabWidget">
+        <!-- set textColor to red, so you can verify that it applied. -->
+        <!-- <item name="android:textColor">#f00</item>  -->
+        <!--<item name="android:textSize">12px</item> -->
+        <item name="android:textColor">#f3f3f3</item>
+    </style>
 
 </resources>

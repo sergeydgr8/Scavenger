@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
@@ -13,13 +13,10 @@ import android.widget.Toast;
 
 import com.android9033.scavenger.scavenger.R;
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText username;
     private EditText password;
@@ -67,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 //dlg.dismiss();
                 if (e != null) {
                     // Show the error message
-                    Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 } else {
                     // Start an intent for the user's main screen
-                    Intent intent = new Intent(MainActivity.this, MyActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }
@@ -97,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         // If there is a validation error, display the error
         if (validationError) {
-            Toast.makeText(MainActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
+            Toast.makeText(LoginActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG)
                     .show();
         }
     }
@@ -113,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     // This method start the activity for create a new user
     private void startSignup() {
-        Intent mIntent = new Intent(this, signupActivity.class);
+        Intent mIntent = new Intent(this, SignupActivity.class);
         startActivity(mIntent);
     }
 

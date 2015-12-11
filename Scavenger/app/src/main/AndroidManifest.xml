@@ -20,13 +20,13 @@
         android:required="true" />
 
     <application
-        android:name=".Control.ParseApplication"
+        android:name=".Controllers.ParseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Control.MainActivity">
+        <activity android:name=".Controllers.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,39 +34,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Control.signupActivity"
+            android:name=".Controllers.SignupActivity"
             android:label="signupActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Control.MainActivity" />
+                android:value=".Controllers.LoginActivity" />
         </activity>
         <activity
-            android:name=".Control.MyActivity"
+            android:name=".Controllers.MainActivity"
             android:label="@string/title_activity_my"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
-            android:name=".Control.CreateQuestActivity"
+            android:name=".Controllers.CreateLandmarkActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Control.MyActivity" />
+                android:value=".Controllers.MainActivity" />
         </activity>
         <activity
-            android:name=".Control.QuestInfoActivity"
+            android:name=".Controllers.LandmarkActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Control.MyActivity" />
+                android:value=".Controllers.MainActivity" />
         </activity>
         <activity
-            android:name=".Control.EditProfileActivity"
+            android:name=".Controllers.EditProfileActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Control.MyActivity" />
+                android:value=".Controllers.MainActivity" />
         </activity>
 
 

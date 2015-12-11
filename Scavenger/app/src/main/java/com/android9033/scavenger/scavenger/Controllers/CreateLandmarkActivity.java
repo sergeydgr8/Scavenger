@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.android9033.scavenger.scavenger.Models.Landmark;
 import com.android9033.scavenger.scavenger.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -32,17 +32,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.android9033.scavenger.scavenger.Model.Quest;
-
 /**
  * Created by yirongshao on 11/21/15.
  */
-public class CreateQuestActivity extends AppCompatActivity {
+public class CreateLandmarkActivity extends AppCompatActivity {
 
     private GoogleMap myMap;
-    private EditText questName;
-    private EditText questDescription;
-    private EditText questPoint;
+    private EditText landmarkName;
+    private EditText landmarkDescription;
+    private EditText landmarkPoint;
     private ParseGeoPoint geoPoint;
     private boolean isPublic;
 
@@ -55,14 +53,14 @@ public class CreateQuestActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Create a new Quest");
+            getSupportActionBar().setTitle("Create a new Landmark");
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        questName = (EditText) findViewById(R.id.etName);
-        questDescription = (EditText) findViewById(R.id.etDescriptoin);
-        questPoint = (EditText) findViewById(R.id.etPoint);
+        landmarkName = (EditText) findViewById(R.id.etName);
+        landmarkDescription = (EditText) findViewById(R.id.etDescriptoin);
+        landmarkPoint = (EditText) findViewById(R.id.etPoint);
 
 
         Switch mSwitch = (Switch) findViewById(R.id.switch1);
@@ -124,15 +122,15 @@ public class CreateQuestActivity extends AppCompatActivity {
 
     public void submitQuest(){
         if (checkValid()) {
-            String name = questName.getText().toString();
-            Quest quest = new Quest();
-            quest.setName(name);
-            quest.put("userfinished", new ArrayList<String>());
-            quest.setGeo(geoPoint);
-            quest.setStage(isPublic);
-            quest.setDes(questDescription.getText().toString());
-            quest.put("questpoint",questPoint.getText().toString());
-            quest.saveInBackground(new SaveCallback() {
+            String name = landmarkName.getText().toString();
+            Landmark landmark = new Landmark();
+            landmark.setName(name);
+            landmark.put("userfinished", new ArrayList<String>());
+            landmark.setGeo(geoPoint);
+            landmark.setStage(isPublic);
+            landmark.setDes(landmarkDescription.getText().toString());
+            landmark.put("questpoint", landmarkPoint.getText().toString());
+            landmark.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
                 }
@@ -147,23 +145,23 @@ public class CreateQuestActivity extends AppCompatActivity {
 
                 }
             });
-            Toast.makeText(CreateQuestActivity.this, "Created", Toast.LENGTH_LONG)
+            Toast.makeText(CreateLandmarkActivity.this, "Created!", Toast.LENGTH_LONG)
                     .show();
         }
 
     }
 
     public boolean checkValid(){
-        if (isEmpty(questName)){
-            Toast.makeText(CreateQuestActivity.this, "Qest Name is Empty", Toast.LENGTH_LONG)
+        if (isEmpty(landmarkName)){
+            Toast.makeText(CreateLandmarkActivity.this, "Landmark name is empty! Please set a name.", Toast.LENGTH_LONG)
                     .show();
             return false;
-        } else if (isEmpty(questDescription)){
-            Toast.makeText(CreateQuestActivity.this, "Qest Description is Empty", Toast.LENGTH_LONG)
+        } else if (isEmpty(landmarkDescription)){
+            Toast.makeText(CreateLandmarkActivity.this, "Landmark description is empty! Please enter one.", Toast.LENGTH_LONG)
                     .show();
             return false;
         } else if (geoPoint == null){
-            Toast.makeText(CreateQuestActivity.this, "Please set a location", Toast.LENGTH_LONG)
+            Toast.makeText(CreateLandmarkActivity.this, "Location is empty! Please set a location.", Toast.LENGTH_LONG)
                     .show();
             return false;
         } else {

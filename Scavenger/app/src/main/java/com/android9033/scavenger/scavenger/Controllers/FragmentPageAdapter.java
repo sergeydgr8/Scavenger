@@ -1,6 +1,5 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,7 +20,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position){
         switch (position){
             case 0:
-                return new QuestsFragment();
+                return new QuestsListFragment();
             case 1:
                 return new RankingFragment();
             case 2:
@@ -30,7 +29,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
                 break;
         }
         return null;
-        //return QuestsFragment.newInstance(position+1);
+        //return QuestsListFragment.newInstance(position+1);
     }
 
     @Override

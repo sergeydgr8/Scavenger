@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Control;
+package com.android9033.scavenger.scavenger.Controllers;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android9033.scavenger.scavenger.Model.Quest;
+import com.android9033.scavenger.scavenger.Models.Landmark;
 import com.android9033.scavenger.scavenger.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,13 +28,12 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by yirongshao on 11/27/15.
  */
-public class QuestInfoActivity extends AppCompatActivity {
+public class LandmarkActivity extends AppCompatActivity {
 
     private GoogleMap myMap;
     GoogleApiClient mGoogleApiClient;
@@ -76,15 +75,15 @@ public class QuestInfoActivity extends AppCompatActivity {
         //System.out.print("Out: " + out);
         name.setText(out);
 
-        ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
+        ParseQuery<Landmark> query=new ParseQuery<Landmark>("Landmark");
         query.whereEqualTo("name", out);
-        query.findInBackground(new FindCallback<Quest>() {
+        query.findInBackground(new FindCallback<Landmark>() {
             @Override
-            public void done(List<Quest> objects, ParseException e) {
+            public void done(List<Landmark> objects, ParseException e) {
                 if (e == null) {
-                    for (Quest quest : objects) {
-                        description = quest.getString("description");
-                        geoPoint = quest.getParseGeoPoint("geopoint");
+                    for (Landmark landmark : objects) {
+                        description = landmark.getString("description");
+                        geoPoint = landmark.getParseGeoPoint("geopoint");
                         System.out.println(description);
                         System.out.println(geoPoint);
                     }
@@ -111,19 +110,19 @@ public class QuestInfoActivity extends AppCompatActivity {
         double r = Math.sqrt(latDiff +lngDiff);
 
         if (r < 0.0005){
-            ParseQuery<Quest> Qquery=new ParseQuery<Quest>("Quest");
+            ParseQuery<Landmark> Qquery=new ParseQuery<Landmark>("Landmark");
             Qquery.whereEqualTo("name", out);
-            Qquery.findInBackground(new FindCallback<Quest>() {
+            Qquery.findInBackground(new FindCallback<Landmark>() {
                 @Override
-                public void done(List<Quest> objects, ParseException e) {
+                public void done(List<Landmark> objects, ParseException e) {
                     if (e == null) {
-                        for (Quest quest : objects) {
-                            questpoint = quest.getString("questpoint");
+                        for (Landmark landmark : objects) {
+                            questpoint = landmark.getString("questpoint");
 
                         }
                     }
 
-                    Toast.makeText(QuestInfoActivity.this, "Success! And you got " + questpoint + " points!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LandmarkActivity.this, "Success! And you got " + questpoint + " points!", Toast.LENGTH_SHORT).show();
                     ParseUser curUser = ParseUser.getCurrentUser();
                     int oldPoint = Integer.parseInt(curUser.getString("point"));
                     System.out.println(oldPoint);
@@ -147,18 +146,18 @@ public class QuestInfoActivity extends AppCompatActivity {
 
 
 
-            ParseQuery<Quest> query=new ParseQuery<Quest>("Quest");
+            ParseQuery<Landmark> query=new ParseQuery<Landmark>("Landmark");
             query.whereEqualTo("name", out);
-            query.findInBackground(new FindCallback<Quest>() {
+            query.findInBackground(new FindCallback<Landmark>() {
                 @Override
-                public void done(List<Quest> objects, ParseException e) {
+                public void done(List<Landmark> objects, ParseException e) {
                     if (e == null) {
-                        for (Quest quest : objects) {
-                            //System.out.println(quest.getList("userfinished"));
-                            List userlist = quest.getList("userfinished");
+                        for (Landmark landmark : objects) {
+                            //System.out.println(landmark.getList("userfinished"));
+                            List userlist = landmark.getList("userfinished");
                             userlist.add(ParseUser.getCurrentUser().getUsername());
-                            quest.put("userfinished", userlist);
-                            quest.saveInBackground(new SaveCallback() {
+                            landmark.put("userfinished", userlist);
+                            landmark.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
 
@@ -176,7 +175,7 @@ public class QuestInfoActivity extends AppCompatActivity {
 
 
         } else{
-            Toast.makeText(QuestInfoActivity.this, "Oops, Find It Again! ", Toast.LENGTH_LONG)
+            Toast.makeText(LandmarkActivity.this, "Oops, Find It Again! ", Toast.LENGTH_LONG)
                     .show();
 
         }

@@ -1,4 +1,4 @@
-package com.android9033.scavenger.scavenger.Model;
+package com.android9033.scavenger.scavenger.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
@@ -7,8 +7,11 @@ import com.parse.ParseObject;
 /**
  * Created by orchumandz on 11/25/2015.
  */
-@ParseClassName("Quest")
-public class Quest extends ParseObject {
+
+// TODO: Rename Parse DB -> export and re-import it
+
+@ParseClassName("Landmark")
+public class Landmark extends ParseObject {
     public String getName(){
         return getString("name");
     }

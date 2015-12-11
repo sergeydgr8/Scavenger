@@ -1,7 +1,6 @@
-package com.android9033.scavenger.scavenger.Model;
+package com.android9033.scavenger.scavenger.Models;
 
 import com.parse.ParseClassName;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 /**
