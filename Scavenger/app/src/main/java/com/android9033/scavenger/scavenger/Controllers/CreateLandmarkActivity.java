@@ -109,13 +109,15 @@ public class CreateLandmarkActivity extends AppCompatActivity {
             } catch (IOException e){
                 e.printStackTrace();
             }
-
-            Address address = addressList.get(0);
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
-            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
-            geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
-
+            if (addressList == null || addressList.size() == 0){
+                Toast.makeText(CreateLandmarkActivity.this, "No location found", Toast.LENGTH_LONG).show();
+            } else {
+                Address address = addressList.get(0);
+                LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+                myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.0f));
+                geoPoint = new ParseGeoPoint(address.getLatitude(), address.getLongitude());
+            }
         }
 
     }

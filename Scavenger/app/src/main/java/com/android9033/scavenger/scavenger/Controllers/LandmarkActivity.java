@@ -1,5 +1,6 @@
 package com.android9033.scavenger.scavenger.Controllers;
 
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
@@ -93,8 +96,27 @@ public class LandmarkActivity extends AppCompatActivity {
                 System.out.print(geoPoint.getLatitude() + ", " + geoPoint.getLongitude());
 
                 LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
-                myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+                //myMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
                 myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f));
+
+                //create a random point within a square with side length of 100m
+                // 1 latitude = 111km, 1 longitude = 85.4km
+                double lowerLatitude = geoPoint.getLatitude() - 0.001;
+                double upperLatitude = geoPoint.getLatitude() + 0.001;
+                double resultLatitude = Math.random() * (upperLatitude - lowerLatitude) + lowerLatitude;
+                double lowerLongitude = geoPoint.getLongitude() - 0.001;
+                double upperLongitude = geoPoint.getLongitude() + 0.001;
+                double resultLongitude = Math.random() * (upperLongitude - lowerLongitude) + lowerLongitude;
+                LatLng resultLatLng = new LatLng(resultLatitude, resultLongitude);
+
+                //Instantiates a CircleOption abject and define the center and radius
+                CircleOptions circleOptions = new CircleOptions()
+                        .center(resultLatLng)
+                        .radius(150);
+                Circle circle = myMap.addCircle(circleOptions);
+                circle.setStrokeColor(Color.BLUE);
+                circle.setStrokeWidth(1);
+                circle.setFillColor(0x5500BFFF);
 
             }
         });
@@ -109,7 +131,7 @@ public class LandmarkActivity extends AppCompatActivity {
         double lngDiff = Math.pow((geoPoint.getLongitude() - myLocation.getLongitude()),2);
         double r = Math.sqrt(latDiff +lngDiff);
 
-        if (r < 0.0005){
+        if (r <= 0.0001){
             ParseQuery<Landmark> Qquery=new ParseQuery<Landmark>("Landmark");
             Qquery.whereEqualTo("name", out);
             Qquery.findInBackground(new FindCallback<Landmark>() {
@@ -140,12 +162,6 @@ public class LandmarkActivity extends AppCompatActivity {
                 }
             });
 
-
-
-
-
-
-
             ParseQuery<Landmark> query=new ParseQuery<Landmark>("Landmark");
             query.whereEqualTo("name", out);
             query.findInBackground(new FindCallback<Landmark>() {
@@ -169,15 +185,15 @@ public class LandmarkActivity extends AppCompatActivity {
 
                 }
             });
-
-
             //ParseUser curUser2=ParseUser.getCurrentUser();
 
 
+        } else if (r > 0.0001 && r <= 0.0003){
+            Toast.makeText(LandmarkActivity.this, "You are getting close to it! ", Toast.LENGTH_LONG)
+                    .show();
         } else{
             Toast.makeText(LandmarkActivity.this, "Oops, Find It Again! ", Toast.LENGTH_LONG)
                     .show();
-
         }
 
     }
