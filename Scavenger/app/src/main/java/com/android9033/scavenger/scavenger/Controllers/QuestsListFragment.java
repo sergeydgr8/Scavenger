@@ -29,16 +29,6 @@ public class QuestsListFragment extends Fragment {
     private ListView lv;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> str;
-   /* PriorityQueue<ParseUser> points=new PriorityQueue<ParseUser>(10,new Comparator<ParseUser>(){
-        @Override
-        public int compare(ParseUser user1,ParseUser user2){
-            int first=Integer.parseInt(user1.getString("point"));
-            int second=Integer.parseInt(user2.getString("point"));
-            return second-first;
-        }
-    });
-    */
-    //Stack<Landmark> landmarks =new Stack<Landmark>();
 
     Stack<Quest> quests = new Stack<Quest>();
     ArrayList<String> questIDs = new ArrayList<String>();
@@ -57,7 +47,6 @@ public class QuestsListFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1, str);
         lv.setAdapter(adapter);
 
-        //ParseQuery<Landmark> query=new ParseQuery<Landmark>("Quest");
         ParseQuery<Quest> query = new ParseQuery<Quest>("Quest2");
         query.findInBackground(new FindCallback<Quest>() {
             @Override
@@ -86,46 +75,10 @@ public class QuestsListFragment extends Fragment {
                 }
             }
         });
-        /*query.findInBackground(new FindCallback<Landmark>() {
-            @Override
-            public void done(List<Landmark> objects, ParseException e) {
-                if(e==null) {
-                    for (Landmark landmark : objects) {
-                        List userlist= landmark.getList("userfinished");
-                        String curUser=ParseUser.getCurrentUser().getUsername();
-                        if(!userlist.contains(curUser)) {
-                            landmarks.push(landmark);
-                        }
-                        //System.out.println(user.getString("point"));
-                    }
-                }
-                // Landmark quest = ParseObject.get
-                //quest.setName("firstquest");
-                //System.out.println(quest.getName());
-                //ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_ranking, container, false);
-                int index =0;
-                for (int tt = 0; tt < 10; tt++){
-                    if(!landmarks.isEmpty()) {
-                        index++;
-                        Landmark landmark = landmarks.pop();
-                        str.add(landmark.getString("name"));
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-
-
-            }
-        });*/
-
-        // quest.setName("firstquest");
-//        System.out.println(points.get(1));
-
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Intent mIntent = new Intent(getActivity(), LandmarkActivity.class);
                 Intent mIntent = new Intent(getActivity(), QuestActivity.class);
-                //mIntent.putExtra("1",adapter.getItem(position));
                 mIntent.putExtra("questID", questIDs.get(position));
                 startActivity(mIntent);
             }
