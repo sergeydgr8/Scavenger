@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.android9033.scavenger.scavenger.Models.Landmark;
+import com.android9033.scavenger.scavenger.Models.Quest;
 import com.android9033.scavenger.scavenger.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -26,7 +26,7 @@ import java.util.Stack;
  */
 public class QuestsListFragment extends Fragment {
 
-    private  ListView lv;
+    private ListView lv;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> str;
    /* PriorityQueue<ParseUser> points=new PriorityQueue<ParseUser>(10,new Comparator<ParseUser>(){
@@ -38,7 +38,9 @@ public class QuestsListFragment extends Fragment {
         }
     });
     */
-    Stack<Landmark> landmarks =new Stack<Landmark>();
+    //Stack<Landmark> landmarks =new Stack<Landmark>();
+
+    Stack<Quest> quests = new Stack<Quest>();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -54,8 +56,35 @@ public class QuestsListFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1, str);
         lv.setAdapter(adapter);
 
-        ParseQuery<Landmark> query=new ParseQuery<Landmark>("Landmark");
-        query.findInBackground(new FindCallback<Landmark>() {
+        //ParseQuery<Landmark> query=new ParseQuery<Landmark>("Quest");
+        ParseQuery<Quest> query = new ParseQuery<Quest>("Quest2");
+        query.findInBackground(new FindCallback<Quest>() {
+            @Override
+            public void done(List<Quest> objects, ParseException e) {
+                if (e == null)
+                {
+                    for (Quest q : objects)
+                    {
+                        //List user_list = q.getList("userfinished");
+                        //String curr_user = ParseUser.getCurrentUser().getUsername();
+                        //if (!user_list.contains(curr_user))
+                        quests.push(q);
+                    }
+                }
+                int index = 0;
+                for (int tt = 0; tt < 10; tt++)
+                {
+                    if (!quests.isEmpty())
+                    {
+                        index++;
+                        Quest q = quests.pop();
+                        str.add(q.getString("name"));
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
+        /*query.findInBackground(new FindCallback<Landmark>() {
             @Override
             public void done(List<Landmark> objects, ParseException e) {
                 if(e==null) {
@@ -84,7 +113,7 @@ public class QuestsListFragment extends Fragment {
 
 
             }
-        });
+        });*/
 
         // quest.setName("firstquest");
 //        System.out.println(points.get(1));
@@ -92,13 +121,12 @@ public class QuestsListFragment extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent mIntent = new Intent(getActivity(), LandmarkActivity.class);
+                //Intent mIntent = new Intent(getActivity(), LandmarkActivity.class);
+                Intent mIntent = new Intent(getActivity(), QuestActivity.class);
                 mIntent.putExtra("1",adapter.getItem(position));
                 startActivity(mIntent);
             }
         });
-
-
 
         return view;
     }

@@ -10,7 +10,7 @@ import com.parse.ParseObject;
 
 // TODO: Rename Parse DB -> export and re-import it
 
-@ParseClassName("Quest")
+@ParseClassName("Landmark")
 public class Landmark extends ParseObject {
     public String getName(){
         return getString("name");

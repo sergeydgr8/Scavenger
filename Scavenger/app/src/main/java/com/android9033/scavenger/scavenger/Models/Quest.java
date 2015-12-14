@@ -17,6 +17,7 @@ public class Quest extends ParseObject
     public String get_name() { return getString("name"); }
     public String get_city() { return getString("city"); }
     public JSONArray get_landmark_ids() { return getJSONArray("landmarks"); }
+    public JSONArray get_users_finished() { return getJSONArray("userfinished"); }
     public boolean is_public() { return getBoolean("public"); }
     public int get_point_bounty() { return getInt("bounty"); }
 }
