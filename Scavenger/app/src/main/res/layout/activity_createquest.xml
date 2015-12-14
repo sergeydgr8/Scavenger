@@ -1,93 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <include android:id="@+id/app_bar"
-        layout="@layout/app_bar"/>
+             layout="@layout/app_bar"/>
 
-
-    <EditText
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/etName"
-        android:layout_below="@+id/app_bar"
-        android:hint="Name"
-        android:layout_marginTop="10dp"
-        android:layout_alignStart="@+id/switch1"
-        android:layout_toStartOf="@+id/btnSearch"
-        android:textSize="12dp" />
+        android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etDescriptoin"
-        android:layout_below="@+id/etName"
-        android:layout_alignStart="@+id/etName"
-        android:layout_toStartOf="@+id/btnSearch"
-        android:textSize="12sp"
-        android:hint="Description"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etLandmark"
-        android:hint="Landmark"
-        android:layout_alignStart="@+id/switch1"
-        android:layout_below="@+id/etDescriptoin"
-        android:layout_toStartOf="@+id/btnSearch"
-        android:textSize="12sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create a Quest."
+                android:textSize="40dp"
+                android:gravity="center"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/etPoint"
-        android:hint="Points"
-        android:layout_below="@+id/etLandmark"
-        android:layout_alignStart="@+id/switch1"
-        android:layout_alignEnd="@+id/etLandmark"
-        android:inputType="number"
-        android:textSize="12sp"/>
+        </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        android:id="@+id/btnSearch"
-        android:onClick="onSearch"
-        android:textSize="12sp"
-        android:layout_alignBottom="@+id/etLandmark"
-        android:layout_alignEnd="@+id/map" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Public"
-        android:id="@+id/switch1"
-        android:checked="false"
-        android:textSize="12sp"
-        android:layout_below="@+id/etPoint"
-        android:layout_alignStart="@+id/map" />
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/quest_name_creation_input_wrapper">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/map"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_below="@+id/switch1"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/btnSubmit" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/quest_name_creation_input"
+                    android:hint="Name of the quest."/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit!"
-        android:id="@+id/btnSubmit"
-        android:layout_alignEnd="@+id/map"
-        android:layout_alignStart="@+id/map"
-        android:layout_alignParentBottom="true" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_location_creation_input_wrapper">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:id="@+id/quest_location_creation_input"
+                    android:hint="General location of quest."/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/quest_bounty_creation_input_wrapper">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:id="@+id/quest_bounty_creation_input"
+                    android:hint="Bounty (number of points to win)."/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 
 </RelativeLayout>

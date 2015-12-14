@@ -47,7 +47,7 @@ public class CreateLandmarkActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createquest);
+        setContentView(R.layout.activity_createlandmark);
 
         // Set up the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
