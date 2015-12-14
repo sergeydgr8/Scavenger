@@ -41,6 +41,7 @@ public class QuestsListFragment extends Fragment {
     //Stack<Landmark> landmarks =new Stack<Landmark>();
 
     Stack<Quest> quests = new Stack<Quest>();
+    ArrayList<String> questIDs = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -69,6 +70,7 @@ public class QuestsListFragment extends Fragment {
                         //String curr_user = ParseUser.getCurrentUser().getUsername();
                         //if (!user_list.contains(curr_user))
                         quests.push(q);
+                        questIDs.add(0, q.getObjectId());
                     }
                 }
                 int index = 0;
@@ -123,7 +125,8 @@ public class QuestsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Intent mIntent = new Intent(getActivity(), LandmarkActivity.class);
                 Intent mIntent = new Intent(getActivity(), QuestActivity.class);
-                mIntent.putExtra("1",adapter.getItem(position));
+                //mIntent.putExtra("1",adapter.getItem(position));
+                mIntent.putExtra("questID", questIDs.get(position));
                 startActivity(mIntent);
             }
         });

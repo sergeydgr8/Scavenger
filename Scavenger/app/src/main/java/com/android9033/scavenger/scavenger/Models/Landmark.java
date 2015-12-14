@@ -18,6 +18,7 @@ public class Landmark extends ParseObject {
     public void setName(String name){
         put("name",name);
     }
+    public String getID() { return getString("objectId"); }
     public boolean getStage(){
         return getBoolean("stage");
     }

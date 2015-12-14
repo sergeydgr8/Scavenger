@@ -70,7 +70,7 @@ public class RankingFragment extends Fragment {
         adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1, str);
         lv.setAdapter(adapter);
 
-        ParseQuery<ParseUser> query=ParseUser.getQuery();
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
 
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override

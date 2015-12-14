@@ -1,8 +1,8 @@
 package com.android9033.scavenger.scavenger.Models;
 
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-import org.json.JSONArray;
+        import com.parse.ParseClassName;
+        import com.parse.ParseObject;
+        import org.json.JSONArray;
 
 /**
  * Created by sergey on 12/11/15.

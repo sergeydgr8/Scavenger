@@ -81,7 +81,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.MainActivity"/>
         </activity>
-
+        <activity android:name=".Controllers.QuestActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controllers.MainActivity"/>
+        </activity>
 
 
         <meta-data
