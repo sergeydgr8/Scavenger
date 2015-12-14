@@ -52,7 +52,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Controllers.MainActivity" />
+                android:value=".Controllers.CreateQuestActivity" />
         </activity>
         <activity
             android:name=".Controllers.LandmarkActivity"
@@ -68,6 +68,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Controllers.MainActivity" />
         </activity>
+        <activity
+            android:name=".Controllers.AddQuestActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controllers.MainActivity" />
+        </activity>
+        <activity android:name=".Controllers.CreateQuestActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Controllers.MainActivity"/>
+        </activity>
+
 
 
         <meta-data

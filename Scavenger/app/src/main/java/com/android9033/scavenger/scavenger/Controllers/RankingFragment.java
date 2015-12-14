@@ -53,7 +53,7 @@ public class RankingFragment extends Fragment {
         String point=curUser.getString("point");
         System.out.println(point);
 
-        ParseQuery<Landmark> query2=new ParseQuery<Landmark>("Landmark");
+        //ParseQuery<Landmark> query2=new ParseQuery<Landmark>("Landmark");
 /*
         Landmark quest=new Landmark();
         quest.setName("second");

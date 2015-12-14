@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_main);
 
         // Set up the action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -60,9 +60,17 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(MainActivity.this, CreateLandmarkActivity.class);
+                Intent mIntent = new Intent(MainActivity.this, AddQuestActivity.class);
                 startActivity(mIntent);
+            }
+        });
 
+        FloatingActionButton fab_create = (FloatingActionButton) findViewById(R.id.fab_create);
+        fab_create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view) {
+                Intent mIntent = new Intent(MainActivity.this, CreateQuestActivity.class);
+                startActivity(mIntent);
             }
         });
 
