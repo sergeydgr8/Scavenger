@@ -12,9 +12,18 @@
         android:orientation="vertical"
         android:layout_below="@+id/app_bar">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:text="null"
+            android:gravity="center"
+            android:id="@+id/quest_info_name"/>
+
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:id="@+id/quest_landmarks_view"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />

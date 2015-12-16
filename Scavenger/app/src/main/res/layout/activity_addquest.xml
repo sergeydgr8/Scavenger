@@ -30,7 +30,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add manually by ID"/>
+            android:text="Add manually by ID"
+            android:id="@+id/add_quest_by_id_button"/>
 
     </LinearLayout>
 
