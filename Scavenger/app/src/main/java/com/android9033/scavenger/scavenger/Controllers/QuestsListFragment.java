@@ -80,6 +80,7 @@ public class QuestsListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent mIntent = new Intent(getActivity(), QuestActivity.class);
                 mIntent.putExtra("questID", questIDs.get(position));
+                mIntent.putExtra("questName", str.get(position));
                 startActivity(mIntent);
             }
         });

@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:text="null"
             android:gravity="center"
             android:id="@+id/quest_info_name"/>

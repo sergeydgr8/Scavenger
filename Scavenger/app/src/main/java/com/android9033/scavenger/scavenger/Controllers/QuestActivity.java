@@ -34,59 +34,28 @@ import java.util.Stack;
  */
 public class QuestActivity extends AppCompatActivity
 {
-    private ListView lv;
-    private ArrayAdapter<String> adapter;
-    private ArrayList<String> str = new ArrayList<String>();
+    private static ListView lv;
+    private static ArrayAdapter<String> adapter;
+    private static ArrayList<String> str;
     private static String questID;
-    private String quest_name;
-    private String quest_loc;
-    private ArrayList<String> landmarkIDs = new ArrayList<String>();
-    private TextView name_view;
+    private static String quest_name;
+    private static String quest_loc;
+    private static ArrayList<String> landmarkIDs;
 
-    Stack<Landmark> landmarks = new Stack<Landmark>();
+    private static Stack<Landmark> landmarks = new Stack<Landmark>();
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questinfo);
-        name_view = (TextView) findViewById(R.id.quest_info_name);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
-        if (toolbar != null)
-        {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Quest.");
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        lv = (ListView) findViewById(R.id.quest_landmarks_view);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, str);
-        lv.setAdapter(adapter);
+        landmarkIDs = new ArrayList<String>();
+        str = new ArrayList<String>();
+        //quest_name = new String();
+        //quest_loc = new String();
 
         questID = getIntent().getStringExtra("questID");
 
         ParseQuery<Quest> quest_query = new ParseQuery<Quest>("Quest2");
-        //ParseQuery<Quest> quest_query = ParseQuery.getQuery("Quest2");
-        /*try {
-            List<Quest> result = quest_query.find();
-            for (Quest q : result)
-            {
-                if (q.getObjectId() == questID)
-                {
-                    quest_name = q.getString("name");
-                    Log.i("Something", "Added a name: " + q.getString("name"));
-                    quest_loc = q.getString("location");
-                    for (int i = 0; i < q.getList("landmarks").size(); i++)
-                        landmarkIDs.add((String) q.getList("landmarks").get(i));
-                    //landmarkIDs = q.getList("landmarks");
-                }
-            }
-        } catch (ParseException e) {
-            //e.printStackTrace();
-            Log.e("SCVNGR", "Exception: " + e.toString());
-        }*/
-
         quest_query.whereEqualTo("objectId", questID);
 
         quest_query.findInBackground(new FindCallback<Quest>() {
@@ -135,66 +104,34 @@ public class QuestActivity extends AppCompatActivity
                 adapter.notifyDataSetChanged();
             }
         }
-        /*quest_query.getInBackground(questID, new GetCallback<Quest>() { // no idea why this does not work
-            @Override
-            public void done(Quest object, ParseException e) {
-                if (e == null) {
-                    quest_name = object.getString("name");
-                    quest_loc = object.getString("location");
-                    landmarkIDs = object.getList("landmarks");
-                }
-
-                ParseQuery<Landmark> landmarks_query = new ParseQuery<Landmark>("Landmark");
-                for (String s : landmarkIDs) {
-                    landmarks_query.getInBackground(s, new GetCallback<Landmark>() {
-                        @Override
-                        public void done(Landmark object, ParseException e) {
-                            if (e == null) {
-                                //str.add(object.getString("name"));
-                                landmarks.push(object);
-                            }
-                        }
-                    });
-                }
-
-                int index = 0;
-                for (int i = 0; i < 10; i++)
-                {
-                    if (!landmarks.isEmpty())
-                    {
-                        index++;
-                        Landmark l = landmarks.pop();
-                        str.add(l.getString("name"));
-                        adapter.notifyDataSetChanged();
-                    }
-                }
 
 
-            }
-        });*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
+        if (toolbar != null)
+        {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle(quest_name);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+        TextView name_view = (TextView) findViewById(R.id.quest_info_name);
+        name_view.setText(quest_loc);
 
-        name_view.setText(quest_name);
+        lv = (ListView) findViewById(R.id.quest_landmarks_view);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, str);
+        lv.setAdapter(adapter);
 
         //str = new ArrayList<String>();
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent mIntent = new Intent(getApplicationContext(), LandmarkActivity.class);
                 mIntent.putExtra("landmarkID", landmarks.get(position).getID());
+                startActivity(mIntent);
             }
         });
-
     }
 
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.activity_questinfo, container, false);
-        str = new ArrayList<String>();
-        lv = (ListView) findViewById(R.id.quest_landmarks_view);
-        adapter = new ArrayAdapter<String>(this.getApplicationContext(),android.R.layout.simple_expandable_list_item_1, str);
-        lv.setAdapter(adapter);
-
-        return view;
-    }*/
 }
